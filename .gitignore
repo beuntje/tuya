@@ -1,0 +1,4 @@
+settings.ini
+temp.json
+*.pyc
+_*.*
