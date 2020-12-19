@@ -71,8 +71,16 @@ class Tuya(object):
             self.__save('devices', devices, 600)
 
         return devices
+ 
+    def control(self, device, value): 
+        result = requests.post(
+                self.__endpoint("skill"),
+                json={"header": {"name": "turnOnOff", "namespace": "control", "payloadVersion": 1}, "payload": {"accessToken": self.__access_token(), "devId": device, "value": value}}
+            ).json()
 
+        return result
 
+    
     def __countryCode(self, region): 
         if (region == 'EU') :
             return 44
@@ -94,8 +102,5 @@ class Tuya(object):
     
     def __now(self): 
         return datetime.datetime.now()
-
-    def test(self):  
-        pprint.pprint (  self.devices())
-        pprint.pprint (  self.devices())
-        #self.auth()
+ 
+ 
