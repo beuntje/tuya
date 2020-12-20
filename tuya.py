@@ -1,9 +1,7 @@
 import requests
 import os
-import configparser
-import pprint
+import configparser 
 import json
-import datetime
 import time
 
 class Tuya(object):
@@ -48,8 +46,7 @@ class Tuya(object):
             self.__readFile()
 
         self.__cached['expiry_' + key] = self.__expiry(ttl)
-        self.__cached[key] = value
-        #  self.__timeout = self.__now() + datetime.timedelta(seconds=auth['expires_in'])
+        self.__cached[key] = value 
         with open(self.__config['save']['settingsfile'], 'w') as file:
             file.write(json.dumps( self.__cached)) 
 
@@ -73,15 +70,20 @@ class Tuya(object):
             ).json()
             self.__save('devices', devices, 600)
 
-        return devices
+        return self.__payload(devices)['devices']
  
-    def control(self, device, value): 
+    def control(self, action, device, value): 
         result = requests.post(
                 self.__endpoint("skill"),
-                json={"header": {"name": "turnOnOff", "namespace": "control", "payloadVersion": 1}, "payload": {"accessToken": self.__access_token(), "devId": device, "value": value}}
+                json={"header": {"name": action, "namespace": "control", "payloadVersion": 1}, "payload": {"accessToken": self.__access_token(), "devId": device, "value": value}}
             ).json()
 
-        return result
+        return result['header']['code']
+
+    def __payload(self, response): 
+        if 'payload' in response: 
+            return response['payload']
+        return False
 
     
     def __countryCode(self, region): 
