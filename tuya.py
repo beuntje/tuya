@@ -4,6 +4,7 @@ import configparser
 import pprint
 import json
 import datetime
+import time
 
 class Tuya(object):
     __config = False
@@ -46,6 +47,7 @@ class Tuya(object):
         if not self.__cached: 
             self.__readFile()
 
+        self.__cached['expiry_' + key] = self.__expiry(ttl)
         self.__cached[key] = value
         #  self.__timeout = self.__now() + datetime.timedelta(seconds=auth['expires_in'])
         with open(self.__config['save']['settingsfile'], 'w') as file:
@@ -57,9 +59,10 @@ class Tuya(object):
             self.__readFile()
 
         if key in self.__cached:
-            return self.__cached[key]
-        else:
-            return False 
+            if self.__cached['expiry_' + key] > self.__expiry(): 
+                return self.__cached[key]
+        
+        return False 
 
     def devices(self): 
         devices = self.__load('devices')
@@ -100,7 +103,8 @@ class Tuya(object):
             self.__save('accesstoken', accesstoken, auth['expires_in'])
         return accesstoken
     
-    def __now(self): 
-        return datetime.datetime.now()
+    def __expiry(self, ttl = 0):  
+        ts = time.time() 
+        return ts + ttl
  
  
