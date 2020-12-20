@@ -8,23 +8,16 @@ python libs: requests, os, configparser, json, time
 Commands:  
 ---------
 
-check devices: 
+Check devices: 
 ```shell
 python main.py devices
 ```
 
-Turn device on/off: 
+Apply actions: use "control=xxx" and one or multiple "deviceID=value" 
 
 ```shell
-python main.py control=turnOnOff 2587061484cca89b96e0=0 
-python main.py control=turnOnOff 2587061484cca89b96e0=1 bf30879fe8110101c2otj4=1
-```
-
-Set lamp brighness:
-
-```shell
-python main.py control=brightnessSet 2587061484cca89b96e0=0 
-python main.py control=brightnessSet 2587061484cca89b96e0=53
-python main.py control=brightnessSet 2587061484cca89b96e0=100
+python main.py control=turnOnOff az87061484cca89b96e0=0 
+python main.py control=turnOnOff az87061484cca89b96e0=1 bf38879fed110101c2otj4=1
+python main.py control=brightnessSet az87061484cca89b96e0=53
 ``` 
  
