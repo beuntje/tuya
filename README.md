@@ -2,8 +2,18 @@
 
 Dependencies: 
 -------------
-python libs: requests, os, configparser, json, time
+python libs: os, json, time, requests, configparser
+```shell
+pip install requests configparser 
+```
 
+Install: 
+--------
+Create ini-file :
+```shell
+cp settings.example.ini settings.ini
+nano settings.ini 
+```
 
 Commands:  
 ---------

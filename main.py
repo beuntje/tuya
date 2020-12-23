@@ -1,10 +1,14 @@
 from tuya import Tuya
 import pprint 
+import json
 
 from sys import argv
 
 
 TUYA = Tuya()
+
+with open('./test.txt', 'w') as file:
+    file.write(json.dumps( argv))
 
 def get_arg(key): 
     for arg in argv:
